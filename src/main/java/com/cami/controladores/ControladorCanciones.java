@@ -5,11 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.cami.modelos.Cancion;
 import com.cami.servicios.ServicioCanciones;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class ControladorCanciones {
@@ -17,7 +22,9 @@ public class ControladorCanciones {
     private final ServicioCanciones servicioCanciones;
 
     @Autowired
-    public ControladorCanciones(ServicioCanciones servicioCanciones) {
+    public ControladorCanciones(
+            ServicioCanciones servicioCanciones) {
+
         this.servicioCanciones = servicioCanciones;
     }
 
@@ -27,7 +34,10 @@ public class ControladorCanciones {
         List<Cancion> listaCanciones =
                 this.servicioCanciones.obtenerTodasLasCanciones();
 
-        modelo.addAttribute("listaCanciones", listaCanciones);
+        modelo.addAttribute(
+                "listaCanciones",
+                listaCanciones
+        );
 
         return "canciones";
     }
@@ -38,10 +48,35 @@ public class ControladorCanciones {
             Model modelo) {
 
         Cancion cancion =
-                this.servicioCanciones.obtenerCancionPorId(idCancion);
+                this.servicioCanciones
+                        .obtenerCancionPorId(idCancion);
 
         modelo.addAttribute("cancion", cancion);
 
         return "detalleCancion";
+    }
+
+    @GetMapping("/canciones/formulario/agregar/{idCancion}")
+    public String formularioAgregarCancion(
+            @PathVariable("idCancion") Long idCancion,
+            @ModelAttribute("cancion") Cancion cancion) {
+
+        return "agregarCancion";
+    }
+
+    @PostMapping("/canciones/procesa/agregar")
+    public String procesarAgregarCancion(
+            @Valid
+            @ModelAttribute("cancion") Cancion cancionNueva,
+            BindingResult validaciones) {
+
+        if (validaciones.hasErrors()) {
+            return "agregarCancion";
+        }
+
+        this.servicioCanciones
+                .agregarCancion(cancionNueva);
+
+        return "redirect:/canciones";
     }
 }

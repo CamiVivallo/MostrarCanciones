@@ -1,47 +1,55 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+    <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de canciones</title>
-</head>
-<body>
+        <!DOCTYPE html>
+        <html lang="es">
 
-    <h1>Lista de canciones</h1>
+        <head>
+            <meta charset="UTF-8">
+            <title>Lista de canciones</title>
+        </head>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Artista</th>
-                <th>Detalle</th>
-            </tr>
-        </thead>
+        <body>
 
-        <tbody>
-            <c:forEach var="cancion" items="${listaCanciones}">
-                <tr>
-                    <td>
-                        <c:out value="${cancion.titulo}" />
-                    </td>
+            <h1>Lista de canciones</h1>
 
-                    <td>
-                        <c:out value="${cancion.artista}" />
-                    </td>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Artista</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
 
-                    <td>
-                        <a href="/canciones/detalle/${cancion.id}">
-                            Detalle
-                        </a>
-                    </td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+                <tbody>
+                    <c:forEach var="cancion" items="${listaCanciones}">
+                        <tr>
+                            <td>
+                                <c:out value="${cancion.titulo}" />
+                            </td>
 
-</body>
-</html>
+                            <td>
+                                <c:out value="${cancion.artista}" />
+                            </td>
+
+                            <td>
+                                <a href="/canciones/detalle/${cancion.id}">
+                                    Detalle
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+
+            <br>
+
+            <a href="/canciones/formulario/agregar/0">
+                Agregar canción
+            </a>
+
+        </body>
+
+        </html>

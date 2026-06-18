@@ -18,7 +18,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>canciones</name>
-	<description>Aplicación para mostrar canciones utilizando Spring Boot, JPA y MySQL</description>
+	<description>Aplicación para mostrar y agregar canciones utilizando Spring Boot, JPA y MySQL</description>
 
 	<packaging>war</packaging>
 
@@ -38,6 +38,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- Validaciones -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
 		<!-- Conector de MySQL -->

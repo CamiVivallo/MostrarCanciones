@@ -10,11 +10,13 @@ import com.cami.repositorios.RepositorioCanciones;
 
 @Service
 public class ServicioCanciones {
-
-    @Autowired
+    
     private final RepositorioCanciones repositorioCanciones;
 
-    public ServicioCanciones(RepositorioCanciones repositorioCanciones) {
+    @Autowired
+    public ServicioCanciones(
+            RepositorioCanciones repositorioCanciones) {
+
         this.repositorioCanciones = repositorioCanciones;
     }
 
@@ -23,6 +25,12 @@ public class ServicioCanciones {
     }
 
     public Cancion obtenerCancionPorId(Long id) {
-        return this.repositorioCanciones.findById(id).orElse(null);
+        return this.repositorioCanciones
+                .findById(id)
+                .orElse(null);
+    }
+
+    public Cancion agregarCancion(Cancion cancionNueva) {
+        return this.repositorioCanciones.save(cancionNueva);
     }
 }
