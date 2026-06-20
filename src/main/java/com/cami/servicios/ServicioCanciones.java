@@ -10,7 +10,7 @@ import com.cami.repositorios.RepositorioCanciones;
 
 @Service
 public class ServicioCanciones {
-    
+
     private final RepositorioCanciones repositorioCanciones;
 
     @Autowired
@@ -33,8 +33,13 @@ public class ServicioCanciones {
     public Cancion agregarCancion(Cancion cancionNueva) {
         return this.repositorioCanciones.save(cancionNueva);
     }
+
     public Cancion actualizaCancion(Cancion cancionInformacion) {
-    return this.repositorioCanciones.save(cancionInformacion);
-}
+        return this.repositorioCanciones.save(cancionInformacion);
+    }
+
+    public void eliminaCancion(Long idCancion) {
+        this.repositorioCanciones.deleteById(idCancion);
+    }
 
 }

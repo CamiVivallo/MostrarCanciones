@@ -17,6 +17,8 @@ import com.cami.servicios.ServicioCanciones;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+
 @Controller
 public class ControladorCanciones {
 
@@ -113,5 +115,14 @@ public class ControladorCanciones {
 
         return "redirect:/canciones";
     }
+    
+    @DeleteMapping("/canciones/eliminar/{idCancion}")
+public String procesarEliminarCancion(
+        @PathVariable("idCancion") Long idCancion) {
+
+    this.servicioCanciones.eliminaCancion(idCancion);
+
+    return "redirect:/canciones";
+}
 
 }

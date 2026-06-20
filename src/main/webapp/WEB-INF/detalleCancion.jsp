@@ -70,6 +70,16 @@
                 Actualizar canción
             </a>
 
+            <form action="/canciones/eliminar/${cancion.id}" method="POST">
+
+                <input type="hidden" name="_method" value="DELETE">
+
+                <button type="submit">
+                    Eliminar canción
+                </button>
+
+            </form>
+
             <br>
             <br>
             <a href="/canciones">
