@@ -15,6 +15,7 @@ import com.cami.modelos.Cancion;
 import com.cami.servicios.ServicioCanciones;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 public class ControladorCanciones {
@@ -31,13 +32,11 @@ public class ControladorCanciones {
     @GetMapping("/canciones")
     public String desplegarCanciones(Model modelo) {
 
-        List<Cancion> listaCanciones =
-                this.servicioCanciones.obtenerTodasLasCanciones();
+        List<Cancion> listaCanciones = this.servicioCanciones.obtenerTodasLasCanciones();
 
         modelo.addAttribute(
                 "listaCanciones",
-                listaCanciones
-        );
+                listaCanciones);
 
         return "canciones";
     }
@@ -47,9 +46,8 @@ public class ControladorCanciones {
             @PathVariable("idCancion") Long idCancion,
             Model modelo) {
 
-        Cancion cancion =
-                this.servicioCanciones
-                        .obtenerCancionPorId(idCancion);
+        Cancion cancion = this.servicioCanciones
+                .obtenerCancionPorId(idCancion);
 
         modelo.addAttribute("cancion", cancion);
 
@@ -66,8 +64,7 @@ public class ControladorCanciones {
 
     @PostMapping("/canciones/procesa/agregar")
     public String procesarAgregarCancion(
-            @Valid
-            @ModelAttribute("cancion") Cancion cancionNueva,
+            @Valid @ModelAttribute("cancion") Cancion cancionNueva,
             BindingResult validaciones) {
 
         if (validaciones.hasErrors()) {
@@ -79,4 +76,42 @@ public class ControladorCanciones {
 
         return "redirect:/canciones";
     }
+
+    @GetMapping("/canciones/formulario/editar/{idCancion}")
+    public String formularioEditarCancion(
+            @PathVariable("idCancion") Long idCancion,
+            Model modelo) {
+
+        Cancion cancionActual = this.servicioCanciones
+                .obtenerCancionPorId(idCancion);
+
+        modelo.addAttribute("cancion", cancionActual);
+
+        return "editarCancion";
+    }
+
+    @PutMapping("/canciones/procesa/editar/{idCancion}")
+    public String procesarEditarCancion(
+            @Valid @ModelAttribute("cancion") Cancion cancionInformacion,
+            BindingResult validaciones,
+            @PathVariable("idCancion") Long idCancion) {
+
+        cancionInformacion.setId(idCancion);
+
+        if (validaciones.hasErrors()) {
+            return "editarCancion";
+        }
+
+        Cancion cancionActual = this.servicioCanciones
+                .obtenerCancionPorId(idCancion);
+
+        cancionInformacion.setFechaCreacion(
+                cancionActual.getFechaCreacion());
+
+        this.servicioCanciones
+                .actualizaCancion(cancionInformacion);
+
+        return "redirect:/canciones";
+    }
+
 }
