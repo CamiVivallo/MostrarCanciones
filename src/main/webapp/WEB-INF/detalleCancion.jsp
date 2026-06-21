@@ -30,7 +30,18 @@
 
                     <p>
                         <strong>Artista:</strong>
-                        <c:out value="${cancion.artista}" />
+
+                        <c:choose>
+                            <c:when test="${cancion.artista != null}">
+                                <c:out value="${cancion.artista.nombre}" />
+                                <c:out value="${cancion.artista.apellido}" />
+                            </c:when>
+
+                            <c:otherwise>
+                                Sin artista asignado
+                            </c:otherwise>
+                        </c:choose>
+
                     </p>
 
                     <p>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <%@ taglib prefix="form"
     uri="http://www.springframework.org/tags/form" %>
 
@@ -35,16 +37,31 @@
         <br>
 
         <div>
-            <form:label path="artista">
+            <label for="idArtista">
                 Artista:
-            </form:label>
+            </label>
 
-            <form:input
-                path="artista"
-                type="text"
-            />
+            <select
+                id="idArtista"
+                name="idArtista"
+                required>
 
-            <form:errors path="artista" />
+                <option value="">
+                    Selecciona un artista
+                </option>
+
+                <c:forEach
+                    var="artista"
+                    items="${listaArtistas}">
+
+                    <option value="${artista.id}">
+                        <c:out value="${artista.nombre}" />
+                        <c:out value="${artista.apellido}" />
+                    </option>
+
+                </c:forEach>
+
+            </select>
         </div>
 
         <br>
